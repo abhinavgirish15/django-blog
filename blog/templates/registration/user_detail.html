@@ -1,0 +1,44 @@
+{% extends 'blog/base.html'%}
+
+{% block content %}
+{% comment %} <div class="text-center" >
+<img src="{{ user.image.url }}" alt="User  profile pic" id="imagepro" style="border-radius: 50%;">
+<h1>{{ user.first_name }}  {{ user.last_name }}</h1>
+<h4> {{ user.mobile }}</h4>
+<h4>{{ user.username }}</h4>
+
+
+</div> {% endcomment %}
+
+<section class="vh-70">
+    <div class="container py-5 h-30">
+      <div class="row d-flex justify-content-center align-items-center h-30">
+        <div class="col-md-12 col-xl-6">
+  
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body text-center">
+              <div class="mt-3 mb-4">
+                
+              <img src="{{ user.image.url }}"class="rounded-circle" style="width: 150px;" >
+              </div>
+              <h4 class="mb-2">{{ user.first_name}}  {{ user.last_name}}</h4>
+              <p class="text-muted mb-4">{{ user.username}} <span class="mx-2"></span> </p>
+              <p class="text-muted mb-4">{{ user.email}} <span class="mx-2"></span> </p>
+              <p class="text-muted mb-4">{{ user.mobile}} <span class="mx-2"></span> </p>
+              <p class="text-muted mb-4">{{ user.gender}} <span class="mx-2"></span> </p>
+              
+              <a href="{% url 'user_edit' %}"  class="btn btn-primary btn-rounded btn-lg" >
+                Edit profile
+              </a>
+              <div class="d-flex justify-content-between text-center mt-5 mb-2">
+                
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<style>
+    /* Style for the modals */
+    .modal {
+        display: none; 
+        position: fixed; 
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; 
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .subheading {
+        margin-left: 20px;
+        color: gray;
+    }
+</style>
+
+<h2 id="displayHeading"></h2>
+ <h5 class="subhead p-3" id="displaySubHeading"></h5>
+
+    <button id="openModalBtn">Enter Heading</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter Heading</h2>
+            <input type="text" id="headingInput" placeholder="Enter heading">
+            <button id="saveHeadingBtn">Save Heading</button>
+        </div>
+    </div>
+    <button id="openModalBtn2">Enter Sub-Heading</button>
+    <h2 id="displayHeading"></h2>
+    <div id="SubHeadModel" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter Sub-Heading</h2>
+
+            <input type="text" id="SubHeadingInput" placeholder="Enter Sub heading">
+            <button id="saveSubHeadingBtn">Save Sub-Heading</button>
+        </div>
+    </div>
+    <button id="openModalBtn3">Enter Sub-Heading</button>
+    <h2 id="displayHeading"></h2>
+    <div id="RadioModel" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Select Radio </h2>
+            {% comment %} <input type="text" id="SubHeadingInput" placeholder="Enter Sub heading"> {% endcomment %}
+            <input type="radio" id="disable" name="disable" value="Disable">
+            <label for="disable">Disable</label><br>
+            <input type="radio" id="required" name="required" value="required">
+            <label for="required">Required</label><br>
+            
+            <button id="saveselection">Save Sub-Heading</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+           
+            $('#openModalBtn').on('click', function() {
+                $('#myModal').show();
+            });
+            $('#openModalBtn2').on('click', function() {
+                $('#SubHeadModel').show();
+            });
+            $('#openModalBtn3').on('click', function() {
+                $('#RadioModel').show();
+            });
+
+            
+            
+            $('.close').on('click', function() {
+                $('#myModal').hide();
+            });
+            $('.close').on('click', function() {
+                $('#SubHeadModel').hide();
+            });
+            $('.close').on('click', function() {
+                $('#RadioModel').hide();
+            });
+
+            
+            
+
+            
+            $('#saveHeadingBtn').on('click', function() {
+                var headingText = $('#headingInput').val();
+                $('#displayHeading').text(headingText);
+                $('#myModal').hide();
+            });
+            $('#saveSubHeadingBtn').on('click', function() {
+                var headingText = $('#SubHeadingInput').val();
+                $('#displaySubHeading').text(headingText);
+                $('#SubHeadModel').hide();
+            });
+        });
+    </script>
+
+
+{% endblock %}

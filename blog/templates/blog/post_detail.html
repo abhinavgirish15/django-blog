@@ -1,0 +1,205 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .poster-image img {
+        max-width: 100%;
+        height: 20rem;
+        border-radius: 5%;
+        width: -webkit-fill-available;
+    }
+</style>
+<article class="post">
+    <aside class="actions">
+        {% if user.is_authenticated %}
+        <a class="btn btn-secondary" href="{% url 'post_edit' slug=post.slug %}">
+            {% include 'D:\dev\python\django-blog\blog\templates/icons/pencil-fill.svg' %}
+        </a>
+        {% endif %}
+    </aside>
+    
+    {% if post.published_date %}
+    <time class="date">
+        {{ post.published_date }}
+    </time>
+    {% endif %}
+    <h2>{{ post.title }}</h2>
+    <a href="{% url 'categoryview' slug=post.category.slug %}" >
+        {{ post.category.title }}
+    </a>
+    {% comment %} {% for tag in post.tags.all %}
+    <span class="badge badge-light">{{ tag.name }}</span>
+    {% endfor %} {% endcomment %}
+    {% comment %} {% for tag in post.tags.all %} {% endcomment %}
+
+    <div class="poster-image text-center rounded">
+        {% if post.main_image %}
+        <img src="{{ post.main_image.url }}" class="img-fluid rounded" />
+        {% else %}
+        <img src="{% static 'images/default_image.jpg' %}" class="img-fluid" />
+        {% endif %}
+    </div>
+
+    <p>{{ post.content|safe|linebreaksbr }}</p>
+    {% for tag in post.tags.all %}
+    <span class="badge badge-light">
+        <a href="{% url 'tagview' slug=tag.slug %}" class="text-decoration-none text-dark">
+            {{ tag.name }}
+        </a>
+    </span>
+    {% endfor %}
+</article>
+{% comment %} <h2>Comments</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" name="comment_submit">Add Comment</button>
+</form>
+{% for comment in comments %}
+<div>
+    <strong>{{ comment.name|striptags }}</strong> - {{ comment.content }} <br>
+    <small>{{ comment.created_at }}</small>
+    <form method="post" style="margin-top: 10px;">
+        {% csrf_token %}
+        {{ reply_form.as_p }}
+        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+        <button type="submit" name="reply_submit">Add Reply</button>
+    </form>
+    {% for reply in comment.replies.all %}
+    <div style="margin-left: 20px;">
+        <strong>{{ reply.name }}</strong> - {{ reply.content }} <br>
+        <small>{{ reply.created_at }}</small>
+    </div>
+    {% endfor %}
+</div>
+{% endfor %} {% endcomment %}
+
+<section class="gradient-custom">
+    <div class="container my-5 py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-11 col-xl-10">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <h4 class="text-center mb-4 pb-2"> Comments section</h4>
+                        <div class="panel my-5">
+                            <div class="panel-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                    {% for field in comment_form %}
+                                        {% if field.label == 'Comment' %}
+                                        <div class="col-12 p-2">
+                                            {{ field.label }}
+                                            {{ field }}
+                                        </div>
+                                        {% else %}
+                                        <div class="col-6 p-3">
+                                            {{ field.label }}
+                                            {{ field }}
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                    <button class="btn btn-sm btn-primary pull-right" type="submit"
+                                        name="comment_submit">
+                                        <i class="fa fa-pencil fa-fw"></i> Share
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        {% for comment in comments %}
+                        <div class="d-flex flex-start mt-4">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar"
+                                width="65" height="65" />
+                            <div class="flex-grow-1 flex-shrink-1">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="mb-1">
+                                            <strong>{{ comment.name }}</strong>
+                                            <span class="small">{{ comment.created_at }}</span>
+                                        </p>
+                                        <a href="javascript:void(0);" class="toggle-reply-form small">
+                                            <i class="fas fa-reply fa-xs"></i> Reply
+                                        </a>
+                                        
+                                    </div>
+                                    <p class="small mb-0">
+                                        {{ comment.content }}
+                                    </p>
+                                </div>
+
+                                <form method="post" class="reply-form" style="display:none; margin-top: 10px;">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        {% for field in reply_form %}
+                                            {% if field.label == 'Content' %}
+                                            <div class="col-12 p-2">
+                                                {{ field.label }}
+                                                {{ field }}
+                                            </div>
+                                            {% else %}
+                                            <div class="col-6 p-3">
+                                                {{ field.label }}
+                                                {{ field }}
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                    <button class="btn btn-sm btn-primary" type="submit" name="reply_submit">
+                                        Add Reply
+                                    </button>
+                                </form>
+
+                                {% for reply in comment.replies.all %}
+                                <div class="d-flex flex-start mt-4" style="margin-left: 20px;">
+                                    <a class="me-3" href="#">
+                                        <img class="rounded-circle shadow-1-strong"
+                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp"
+                                            alt="avatar" width="65" height="65" />
+                                    </a>
+                                    <div class="flex-grow-1 flex-shrink-1">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-1">
+                                                    <strong>{{ reply.name }}</strong>
+                                                    <span class="small">{{ reply.created_at }}</span>
+                                                </p>
+                                            </div>
+                                            <p class="small mb-0">
+                                                {{ reply.content }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    // JavaScript to toggle the reply form visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        var toggles = document.querySelectorAll('.toggle-reply-form');
+        toggles.forEach(function(toggle) {
+            toggle.addEventListener('click', function() {
+                var replyForm = this.closest('.flex-grow-1').querySelector('.reply-form');
+                if (replyForm.style.display === 'none') {
+                    replyForm.style.display = 'block';
+                } else {
+                    replyForm.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
