@@ -87,3 +87,4 @@ class Reply(models.Model):
 
     def __str__(self):
         return f'{self.author_email} - {self.content[:60]}'
+    
