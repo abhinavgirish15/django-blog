@@ -191,8 +191,4 @@ def user_edit(request):
             return redirect('user_detail')
     else:
         form = CustomUserChangeForm(instance=user)
-    return render(request, 'registration/user_edit.html', {'form': form})
-
-
-
-            
+    return render(request, 'registration/user_edit.html', {'form': form})            
