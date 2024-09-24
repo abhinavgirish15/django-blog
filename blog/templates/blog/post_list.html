@@ -54,12 +54,16 @@
                                 </a>
                             </span>
                         {% endfor %}
+                        
 
                         <p class="date">{{ post.published_date }} </p>
                         <p class="card-text text-truncate">
                             {{ post.content|truncatewords:30|safe|linebreaksbr }}
                         </p>
-                        {% comment %} <a href="#!" class="btn btn-primary" data-mdb-ripple-init>view</a> {% endcomment %}
+                        
+                        {% comment %} 
+                        <a href="#!" class="btn btn-primary" data-mdb-ripple-init>view</a> 
+                        {% endcomment %}
                     </div>
                 </div>
             </div>
