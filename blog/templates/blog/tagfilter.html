@@ -55,7 +55,7 @@
                         <p class="card-text text-truncate">
                             {{ post.content|truncatewords:30|safe|linebreaksbr }}
                         </p>
-                        {% comment %} <P class="date">{{}}</P> {% endcomment %}
+                        {% comment %} <P class="date">{{ post.published_date}}</P> {% endcomment %}
                         
                         {% comment %} <a href="#!" class="btn btn-primary" data-mdb-ripple-init>view</a> {% endcomment %}
                     </div>
