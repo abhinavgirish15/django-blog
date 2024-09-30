@@ -4,6 +4,7 @@
 {% for cat in cats %}
 <article class="post">
     <h2>
+        
         <a href="{% url 'categoryview' slug=cat.slug %}">
         {{ cat.title }}</h2>
     <h6>    {{ cat.description }}</h6></a>
