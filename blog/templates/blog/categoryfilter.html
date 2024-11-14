@@ -6,7 +6,9 @@
         display: none;
     }
 </style>
+
 <div class="cathead">
+    
     <h3>Category:
         {% if posts and posts.0.category %}
             <a href="{% url 'categoryview' slug=posts.0.category.slug %}">{{ posts.0.category.title }}</a>
