@@ -24,6 +24,7 @@
         {{ post.published_date }}
     </time>
     {% endif %}
+    
     <h2>{{ post.title }}</h2>
     <a href="{% url 'categoryview' slug=post.category.slug %}" >
         {{ post.category.title }}
